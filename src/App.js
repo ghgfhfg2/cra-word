@@ -4,6 +4,7 @@ import './custom_antd.less';
 import "./App.css";
 import Join from "./component/Join";
 import Login from "./component/Login";
+import Main from "./component/Main";
 import Loading from "./component/Loading";
 import { Layout, Button, BackTop } from "antd";
 import firebase from "./firebase";
@@ -86,12 +87,12 @@ function App(props) {
             </Link>
           </Header>
           <Layout>
-            <div className="content-box">
-              
+            <div className="content-box">              
               <Content>
                 <Switch>
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/join" component={Join} />
+                  <Route exact path="/" component={Main} />
                 </Switch>
               </Content>
               <BackTop>
