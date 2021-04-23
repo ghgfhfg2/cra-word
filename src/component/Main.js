@@ -20,6 +20,9 @@ function Main() {
       setWordArray(array);
       console.log(array)
     });
+    return function cleanup() {
+      firebase.database().ref("word_list").off();
+    };
   }, [])
 
   const [AddPopState, setAddPopState] = useState(false)
