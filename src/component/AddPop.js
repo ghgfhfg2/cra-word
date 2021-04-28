@@ -16,20 +16,32 @@ function AddPop(props) {
     mode: "onChange",
   });
   const onAddPopSubmit =  async (data) => {
-    try {     
-      let overlap = props.WordArray.find(el => {
-        return el.name === data.name;
-      });
-      if(!overlap){
+    try {  
+      if(props.WordArray){   
+        let overlap = props.WordArray.find(el => {
+          return el.name === data.name;
+        });
+        if(!overlap){
+        await firebase.database()
+        .ref("word_list")
+        .child(data.name)
+        .set({
+          uid: uuid(),
+          timestamp: new Date().getTime(),
+          ...data
+        })
+      }else{
+        alert("이미 등록된 단어 입니다.")
+      }
+    }
+    if(props.ListArr){
       await firebase.database()
       .ref("word_list")
       .child(data.name)
-      .set({
-        uid: uuid(),
+      .update({
+        timestamp: new Date().getTime(),
         ...data
       })
-    }else{
-      alert("이미 등록된 단어 입니다.")
     }
   }catch (error) {
       console.error('error')
@@ -42,8 +54,8 @@ function AddPop(props) {
     <>
       <AddpopBox>
         <form onSubmit={handleSubmit(onAddPopSubmit)}>
-            <input name="name" ref={register} /> 
-            <textarea name="desc" ref={register} />
+            <input name="name" ref={register} defaultValue={props.ListArr ? props.ListArr.name : ''} /> 
+            <textarea name="desc" ref={register} defaultValue={props.ListArr ? props.ListArr.desc : ''} />
             <Button type="primary" htmlType="submit">
               Submit
             </Button>

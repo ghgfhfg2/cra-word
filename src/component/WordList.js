@@ -1,24 +1,29 @@
-import React, {useState,useRef} from 'react'
+import React, {useState,useEffect} from 'react'
 import { Button } from "antd";
 import firebase from "../firebase"
-import styled from "styled-components";
-export const IframeBox = styled.iframe`
-  width:auto;min-width:300px;max-width:500px;
-  height:500px;display:none;
-`
+import AddPop from "./AddPop";
 
 function WordList(props) {
+
+ 
+  const [ModifyPopState, setModifyPopState] = useState(false)
+  const [ListArr, setListArr] = useState()
+  const onModifyPop = (list) => {
+    setModifyPopState(true);
+    setListArr(list)
+  }  
 
   const onDelList = (name) => {
     firebase.database()
     .ref('word_list').child(name).remove();
   }
 
-  const searchFrame = useRef();
-  const onSearch = () => {
-    searchFrame.current.src = 'https://m.dietshin.com/calorie/calorie_main.asp?idx=';
-    searchFrame.current.style.display = 'block';
+  const dateFormat = (timestamp) => {
+    console.log(new Date(1619506732196))
+    return new Date(timestamp);
   }
+
+
   
   return (
     <>
@@ -26,14 +31,17 @@ function WordList(props) {
         {
           props.WordArray &&
           props.WordArray.map(list => (
-          <li key={list.uid} onClick={onSearch}>
+          <li key={list.uid}>
+            <span>{list.timestamp}</span>
             {list.name}:{list.desc}
             <Button htmlType="button" onClick={()=>{onDelList(list.name)}}>del</Button>
+            <Button htmlType="button" onClick={()=>{onModifyPop(list)}}>modify</Button>
           </li>
         ))}
-      </ul>  
-      <IframeBox id="iframe-box" ref={searchFrame}>
-      </IframeBox>
+      </ul>
+      {ModifyPopState && 
+        <AddPop ListArr={ListArr} />
+      }        
     </>
   )
 }

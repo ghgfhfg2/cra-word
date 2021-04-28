@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
 import './custom_antd.less';
 import "./App.css";
@@ -12,6 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setUser, clearUser } from "./redux/actions/user_action";
 import * as antIcon from "react-icons/ai";
+import styled from "styled-components";
+export const IframeBox = styled.iframe`
+  width:auto;min-width:300px;max-width:500px;
+  height:500px;display:none;
+`
 
 
 
@@ -33,6 +38,11 @@ function App(props) {
     });
   }, []);
   
+  const searchFrame = useRef();
+  const onSearch = () => {
+    searchFrame.current.src = 'https://m.dietshin.com/calorie/calorie_main.asp?idx=';
+    searchFrame.current.style.display = 'block';
+  }  
 
   // 스크롤 이벤트 핸들러
   const [TopFix, setTopFix] = useState(false);
@@ -85,6 +95,10 @@ function App(props) {
             <Link to="/join">
                 join
             </Link>
+            <Link to="/login">
+                login
+            </Link>
+            <Button onClick={onSearch}>검색</Button>
           </Header>
           <Layout>
             <div className="content-box">              
@@ -94,6 +108,8 @@ function App(props) {
                   <Route exact path="/join" component={Join} />
                   <Route exact path="/" component={Main} />
                 </Switch>
+                <IframeBox id="iframe-box" ref={searchFrame}>
+                </IframeBox>
               </Content>
               <BackTop>
                 <Button

@@ -12,13 +12,20 @@ function Main() {
     .ref("word_list")
     .on("value", (snapshot) => {
       let array = [];
-      snapshot.forEach(item => {
+      snapshot.forEach(item => {        
+        console.log(item.val().timestamp)
+        let month = new Date(item.val().timestamp).getMonth();
+        let date = new Date(item.val().timestamp).getDate();
+        let hour = new Date(item.val().timestamp).getHours();
+        let min = new Date(item.val().timestamp).getMinutes();
+        console.log(date+hour)
         array.push({
-          ...item.val()
+          ...item.val(),
+          timestamp: `${month}.${date} ${hour}:${min}`
         })
       });
-      setWordArray(array);
       console.log(array)
+      setWordArray(array);
     });
     return function cleanup() {
       firebase.database().ref("word_list").off();
