@@ -24,7 +24,6 @@ function Main() {
           timestamp: `${month}.${date} ${hour}:${min}`
         })
       });
-      console.log(array)
       setWordArray(array);
     });
     return function cleanup() {
