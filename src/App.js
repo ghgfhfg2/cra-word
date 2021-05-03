@@ -5,6 +5,7 @@ import "./App.css";
 import Join from "./component/Join";
 import Login from "./component/Login";
 import Main from "./component/Main";
+import View from "./component/View";
 import Loading from "./component/Loading";
 import { Layout, Button, BackTop } from "antd";
 import firebase from "./firebase";
@@ -107,6 +108,7 @@ function App(props) {
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/join" component={Join} />
                   <Route exact path="/" component={Main} />
+                  <Route path="/view/:name" component={View} />
                 </Switch>
                 <IframeBox id="iframe-box" ref={searchFrame}>
                 </IframeBox>
