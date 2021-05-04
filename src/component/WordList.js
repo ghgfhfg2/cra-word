@@ -2,6 +2,7 @@ import React, {useState,useEffect} from 'react'
 import { Button } from "antd";
 import firebase from "../firebase"
 import AddPop from "./AddPop";
+import View from "./View";
 import { Link } from "react-router-dom";
 
 function WordList(props) {
@@ -14,13 +15,18 @@ function WordList(props) {
     setListArr(list)
   }  
 
+  const [ViewPopState, setViewPopState] = useState(false)
+  const onViewPop = (list) => {
+    setViewPopState(true);
+    setListArr(list)
+  }  
+
   const onDelList = (name) => {
     firebase.database()
     .ref('word_list').child(name).remove();
   }
 
   const dateFormat = (timestamp) => {
-    console.log(new Date(1619506732196))
     return new Date(timestamp);
   }
 
@@ -34,8 +40,7 @@ function WordList(props) {
           props.WordArray.map(list => (
           <li key={list.uid}>
             <span>{list.timestamp}</span>
-            <Link to={`/view/${list.name}`}>{list.name}</Link>
-            :{list.desc}
+            <span onClick={()=>{onViewPop(list)}}>{list.name}</span>
             <Button htmlType="button" onClick={()=>{onDelList(list.name)}}>del</Button>
             <Button htmlType="button" onClick={()=>{onModifyPop(list)}}>modify</Button>
           </li>
@@ -43,7 +48,10 @@ function WordList(props) {
       </ul>
       {ModifyPopState && 
         <AddPop ListArr={ListArr} />
-      }        
+      }
+      {ViewPopState && 
+        <View ListArr={ListArr} />
+      }            
     </>
   )
 }
