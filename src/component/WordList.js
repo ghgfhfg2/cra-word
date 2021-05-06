@@ -1,9 +1,7 @@
 import React, {useState,useEffect} from 'react'
-import { Button } from "antd";
 import firebase from "../firebase"
 import AddPop from "./AddPop";
 import View from "./View";
-import { Link } from "react-router-dom";
 
 function WordList(props) {
 
@@ -41,8 +39,6 @@ function WordList(props) {
           <li key={list.uid}>
             <span>{list.timestamp}</span>
             <span onClick={()=>{onViewPop(list)}}>{list.name}</span>
-            <Button htmlType="button" onClick={()=>{onDelList(list.name)}}>del</Button>
-            <Button htmlType="button" onClick={()=>{onModifyPop(list)}}>modify</Button>
           </li>
         ))}
       </ul>
