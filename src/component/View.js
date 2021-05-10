@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { Button } from "antd";
 import AddPop, {AddpopBox} from "./AddPop";
 import firebase from "../firebase"
+import { useSelector } from "react-redux";
 
 function View(props) {
+  const userInfo = useSelector((state) => state.user.currentUser);
 
   const [ModifyPopState, setModifyPopState] = useState(false)
   const [ListArr, setListArr] = useState()
@@ -26,6 +28,7 @@ function View(props) {
   return (
       <>
         <AddpopBox>
+          {userInfo.name}
           <div>{props.ListArr.name}</div>
           <div>{props.ListArr.desc}</div>
           <Button htmlType="button" onClick={()=>{onDelList(props.ListArr.name)}}>del</Button>

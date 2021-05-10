@@ -23,6 +23,7 @@ export const IframeBox = styled.iframe`
 
 const { Sider, Content, Header } = Layout;
 function App(props) {
+  const userInfo = useSelector((state) => state.user.currentUser);
 
   let history = useHistory();
   let dispatch = useDispatch();
@@ -62,6 +63,10 @@ function App(props) {
     }
   };
 
+  const onLogout = () => {
+    firebase.auth().signOut();
+  };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -73,9 +78,11 @@ function App(props) {
       <>
         <Layout className={TopFix && "top-fix"}>
           <Header className="header-box">
+            {!userInfo &&
             <Link to="/join">
                 join
             </Link>
+            }
           </Header>
           <Layout>
             <div className="content-box">
@@ -93,12 +100,24 @@ function App(props) {
       <>
         <Layout className={TopFix && "top-fix"}>
           <Header className="header-box">
-            <Link to="/join">
-                join
-            </Link>
-            <Link to="/login">
-                login
-            </Link>
+            {!userInfo &&
+              <>
+              <Link to="/join">
+                  join
+              </Link>
+              <Link to="/login">
+                  login
+              </Link>
+              </>
+            }
+            {userInfo &&
+              <>
+              {userInfo.displayName}
+              <span onClick={onLogout}>
+                  logout
+              </span>
+              </>
+            }
             <Button onClick={onSearch}>검색</Button>
           </Header>
           <Layout>
