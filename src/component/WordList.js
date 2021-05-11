@@ -28,6 +28,10 @@ function WordList(props) {
     return new Date(timestamp);
   }
 
+  const onClosePop = () => {
+    setModifyPopState(false);
+  }
+
 
   
   return (
@@ -43,7 +47,7 @@ function WordList(props) {
         ))}
       </ul>
       {ModifyPopState && 
-        <AddPop ListArr={ListArr} />
+        <AddPop ListArr={ListArr} onClosePop={onClosePop} />
       }
       {ViewPopState && 
         <View ListArr={ListArr} />

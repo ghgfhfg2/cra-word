@@ -28,14 +28,17 @@ function View(props) {
   return (
       <>
         <AddpopBox>
-          {userInfo.name}
           <div>{props.ListArr.name}</div>
           <div>{props.ListArr.desc}</div>
-          <Button htmlType="button" onClick={()=>{onDelList(props.ListArr.name)}}>del</Button>
-          <Button htmlType="button" onClick={()=>{onModifyPop(props.ListArr)}}>modify</Button>
+          {userInfo.uid === props.ListArr.w_uid &&
+            <>
+              <Button htmlType="button" onClick={()=>{onDelList(props.ListArr.name)}}>del</Button>
+              <Button htmlType="button" onClick={()=>{onModifyPop(props.ListArr)}}>modify</Button>
+            </>
+          }
         </AddpopBox>
-        {ModifyPopState && 
-          <AddPop ListArr={ListArr} />
+        {ModifyPopState && userInfo.uid === props.ListArr.w_uid &&
+          <AddPop ListArr={ListArr} modiState={ModifyPopState} />
         }
       </>
   )
