@@ -14,12 +14,6 @@ function View(props) {
     setListArr(list)
   }  
 
-  const [ViewPopState, setViewPopState] = useState(false)
-  const onViewPop = (list) => {
-    setViewPopState(true);
-    setListArr(list)
-  }  
-
   const onDelList = (name) => {
     firebase.database()
     .ref('word_list').child(name).remove();
@@ -27,7 +21,7 @@ function View(props) {
 
   return (
       <>
-        <AddpopBox>
+        <AddpopBox>          
           <div>{props.ListArr.name}</div>
           <div>{props.ListArr.desc}</div>
           {userInfo.uid === props.ListArr.w_uid &&

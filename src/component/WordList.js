@@ -19,14 +19,7 @@ function WordList(props) {
     setListArr(list)
   }  
 
-  const onDelList = (name) => {
-    firebase.database()
-    .ref('word_list').child(name).remove();
-  }
 
-  const dateFormat = (timestamp) => {
-    return new Date(timestamp);
-  }
 
   const onClosePop = () => {
     setModifyPopState(false);
