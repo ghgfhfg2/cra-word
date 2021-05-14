@@ -1,5 +1,4 @@
-import React, {useState,useEffect} from 'react'
-import firebase from "../firebase"
+import React, { useState } from 'react'
 import AddPop from "./AddPop";
 import View from "./View";
 
@@ -20,12 +19,6 @@ function WordList(props) {
   }  
 
 
-
-  const onClosePop = () => {
-    setModifyPopState(false);
-  }
-
-
   
   return (
     <>
@@ -40,7 +33,7 @@ function WordList(props) {
         ))}
       </ul>
       {ModifyPopState && 
-        <AddPop ListArr={ListArr} onClosePop={onClosePop} />
+        <AddPop ListArr={ListArr} />
       }
       {ViewPopState && 
         <View ListArr={ListArr} />

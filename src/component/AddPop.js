@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Button } from "antd";
@@ -11,8 +11,10 @@ export const AddpopBox = styled.div`
   padding:20px;
 `
 
-
 function AddPop(props) {
+  useEffect(() => {
+    console.log('close:',props.onClosePop)
+  }, [])
   const userInfo = useSelector((state) => state.user.currentUser);
   const { register, handleSubmit, watch, errors } = useForm({
     mode: "onChange",
@@ -35,8 +37,7 @@ function AddPop(props) {
           w_email: userInfo.email,       
           timestamp: new Date().getTime(),
           ...data
-        });
-        
+        });        
       }else{
         alert("이미 등록된 단어 입니다.")
       }
@@ -49,11 +50,14 @@ function AddPop(props) {
         timestamp: new Date().getTime(),
         ...data
       });
+      props.onClosePop();
     }
   }catch (error) {
       console.error('error')
     }
   };
+
+
 
   watch("name");
 
